@@ -4,7 +4,9 @@ var apiKeyScript = "api_key=486bcd2b0b7cc55fbc3c16f1aadf041686d9cf68ce726b55c7c4
 if (event.request.method == "GET" && event.request.parameters.type == "place") {
     var url = host +
         "sidm/_table/NAMESPACES" +
-        "?filter=INSTANCE%3D" +
+        "?fields=ID%2C%20DESCRIPTION%2C%20ADVERT%2C%20EVENT_CONTENT%2C%20ADDED_ON" +
+        "%2C%20SUM_SCORE%2C%20COMMENTS_COUNT%2C%20GOOGLE_PLACE_ID%2C%20INSTANCE" +
+        "&filter=INSTANCE%3D" +
         event.request.parameters.namespace +
         "&" + apiKeyScript;
     platform.api.get(url, '', function (body, response) {
@@ -22,8 +24,10 @@ if (event.request.method == "GET" && event.request.parameters.type == "place") {
                 if (response.statusCode == 200) {
                     record.namespacePhotos = JSON.parse(body).resource;
                     url = host
-                        + "sidm/_table/PLACES?" +
-                        "?filter=INSTANCE%3D" +
+                        + "sidm/_table/PLACES" +
+                        "?fields=ID%2C%20DESCRIPTION%2C%20ADVERT%2C%20EVENT_CONTENT" +
+                        "%2C%20ADDED_ON%2C%20SUM_SCORE%2C%20COMMENTS_COUNT%2C%20GOOGLE_PLACE_ID%2C%20INSTANCE" +
+                        "&filter=INSTANCE%3D" +
                         event.request.parameters.place +
                         "&" + apiKeyScript;
                     platform.api.get(url, '', function (body, response) {
@@ -59,7 +63,9 @@ if (event.request.method == "GET" && event.request.parameters.type == "place") {
 
     var url = host +
         "sidm/_table/NAMESPACES" +
-        "?filter=INSTANCE%3D" +
+        "?fields=ID%2C%20DESCRIPTION%2C%20ADVERT%2C%20EVENT_CONTENT%2C%20ADDED_ON" +
+        "%2C%20SUM_SCORE%2C%20COMMENTS_COUNT%2C%20GOOGLE_PLACE_ID%2C%20INSTANCE" +
+        "&filter=INSTANCE%3D" +
         event.request.parameters.namespace +
         "&" + apiKeyScript;
     platform.api.get(url, '', function (body, response) {
@@ -85,15 +91,9 @@ if (event.request.method == "GET" && event.request.parameters.type == "place") {
             event.setResponse(JSON.parse(body), JSON.parse(body).error.code, 'applicaton/json');
         }
     });
-} else if (event.request.method == "POST" && event.request.parameters.type == "place") {
-    //TODO
-} else if (event.request.method == "POST" && event.request.parameters.type == "namespace") {
-    //TODO
-} else if (!(event.request.method == "POST" && event.request.parameters.type == "place")
-    && !(event.request.method == "POST" && event.request.parameters.type == "namespace")
-    && !(event.request.method == "GET" && event.request.parameters.type == "place")
+} else if (!(event.request.method == "GET" && event.request.parameters.type == "place")
     && !(event.request.method == "GET" && event.request.parameters.type == "namespace")) {
     throw new Error("Wrong type");
 } else {
-    throw new Error("Only HTTP GET and POST is allowed on this service.");
+    throw new Error("Only HTTP GET is allowed on this service.");
 }
