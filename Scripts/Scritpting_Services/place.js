@@ -1,7 +1,46 @@
 var host = "http://graymanix.ovh/api/v2/";
 var apiKeyScript = "api_key=486bcd2b0b7cc55fbc3c16f1aadf041686d9cf68ce726b55c7c4012bddaab0fe";
-
-if (event.request.method == "GET" && event.request.parameters.type == "place") {
+if (event.request.method == "GET" && event.request.parameters.type == "namespace" && event.resource == "category") {
+    var url = host
+        + "sidm/_table/NAMESPACES" +
+        "?fields=ID%2C%20DESCRIPTION%2C%20ADVERT%2C%20EVENT_CONTENT" +
+        "%2C%20ADDED_ON%2C%20SUM_SCORE%2C%20COMMENTS_COUNT%2C%20GOOGLE_PLACE_ID%2C%20INSTANCE" +
+        "&filter=CATEGORY_ID%3D" +
+        event.request.parameters.category +
+        "&" + apiKeyScript;
+    platform.api.get(url, '', function (body, response) {
+        if (response.statusCode == 200 && JSON.parse(body).resource.length > 0) {
+            var record = {
+                "namespaces": JSON.parse(body).resource[0]
+            };
+            event.setResponse(record, response.statusCode, 'applicaton/json');
+        } else if (response.statusCode == 200 && JSON.parse(body).resource.length == 0) {
+            event.setResponse({"errorType": "namespaceNotFound"}, 404, 'applicaton/json');
+        } else {
+            event.setResponse(JSON.parse(body), JSON.parse(body).error.code, 'applicaton/json');
+        }
+    });
+} else if (event.request.method == "GET" && event.request.parameters.type == "place" && event.resource == "category") {
+    var url = host
+        + "sidm/_table/PLACES" +
+        "?fields=ID%2C%20DESCRIPTION%2C%20ADVERT%2C%20EVENT_CONTENT" +
+        "%2C%20ADDED_ON%2C%20SUM_SCORE%2C%20COMMENTS_COUNT%2C%20GOOGLE_PLACE_ID%2C%20INSTANCE" +
+        "&filter=CATEGORY_ID%3D" +
+        event.request.parameters.category +
+        "&" + apiKeyScript;
+    platform.api.get(url, '', function (body, response) {
+        if (response.statusCode == 200 && JSON.parse(body).resource.length > 0) {
+            var record = {
+                "places": JSON.parse(body).resource[0]
+            };
+            event.setResponse(record, response.statusCode, 'applicaton/json');
+        } else if (response.statusCode == 200 && JSON.parse(body).resource.length == 0) {
+            event.setResponse({"errorType": "placeNotFound"}, 404, 'applicaton/json');
+        } else {
+            event.setResponse(JSON.parse(body), JSON.parse(body).error.code, 'applicaton/json');
+        }
+    });
+} else if (event.request.method == "GET" && event.request.parameters.type == "place") {
     var url = host +
         "sidm/_table/NAMESPACES" +
         "?fields=ID%2C%20DESCRIPTION%2C%20ADVERT%2C%20EVENT_CONTENT%2C%20ADDED_ON" +
