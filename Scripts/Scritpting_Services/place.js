@@ -5,7 +5,7 @@ if (event.request.method == "GET" && event.request.parameters.type == "namespace
         + "sidm/_table/NAMESPACES" +
         "?fields=ID%2C%20DESCRIPTION%2C%20ADVERT%2C%20EVENT_CONTENT" +
         "%2C%20ADDED_ON%2C%20SUM_SCORE%2C%20COMMENTS_COUNT%2C%20GOOGLE_PLACE_ID%2C%20INSTANCE" +
-        "%2C%20LATITUDE%2C%20LONGITUDE" +
+        "%2C%20LATITUDE%2C%20LONGITUDE%2C%20NAME" +
         "&filter=CATEGORY_ID%3D" +
         event.request.parameters.category +
         "&limit=" +
@@ -31,7 +31,7 @@ if (event.request.method == "GET" && event.request.parameters.type == "namespace
         + "sidm/_table/PLACES" +
         "?fields=ID%2C%20DESCRIPTION%2C%20ADVERT%2C%20EVENT_CONTENT" +
         "%2C%20ADDED_ON%2C%20SUM_SCORE%2C%20COMMENTS_COUNT%2C%20GOOGLE_PLACE_ID%2C%20INSTANCE" +
-        "&filter=NAMESPACE_ID%3D" +
+        "&filter=NAMESPACE_ID%3D%2C%20NAME" +
         event.request.parameters.namespaceid +
         "&limit=" +
         event.request.parameters.limit +
@@ -56,7 +56,7 @@ if (event.request.method == "GET" && event.request.parameters.type == "namespace
         "sidm/_table/NAMESPACES" +
         "?fields=ID%2C%20DESCRIPTION%2C%20ADVERT%2C%20EVENT_CONTENT%2C%20ADDED_ON" +
         "%2C%20SUM_SCORE%2C%20COMMENTS_COUNT%2C%20GOOGLE_PLACE_ID%2C%20INSTANCE" +
-        "%2C%20LATITUDE%2C%20LONGITUDE" +
+        "%2C%20LATITUDE%2C%20LONGITUDE%2C%20NAME" +
         "&filter=INSTANCE%3D" +
         event.request.parameters.namespace +
         "&" + apiKeyScript;
@@ -76,7 +76,7 @@ if (event.request.method == "GET" && event.request.parameters.type == "namespace
                     record.namespacePhotos = JSON.parse(body).resource;
                     url = host
                         + "sidm/_table/PLACES" +
-                        "?fields=ID%2C%20DESCRIPTION%2C%20ADVERT%2C%20EVENT_CONTENT" +
+                        "?fields=ID%2C%20DESCRIPTION%2C%20ADVERT%2C%20EVENT_CONTENT%2C%20NAME" +
                         "%2C%20ADDED_ON%2C%20SUM_SCORE%2C%20COMMENTS_COUNT%2C%20GOOGLE_PLACE_ID%2C%20INSTANCE" +
                         "&filter=INSTANCE%3D" +
                         event.request.parameters.place +
@@ -116,7 +116,7 @@ if (event.request.method == "GET" && event.request.parameters.type == "namespace
         "sidm/_table/NAMESPACES" +
         "?fields=ID%2C%20DESCRIPTION%2C%20ADVERT%2C%20EVENT_CONTENT%2C%20ADDED_ON" +
         "%2C%20SUM_SCORE%2C%20COMMENTS_COUNT%2C%20GOOGLE_PLACE_ID%2C%20INSTANCE" +
-        "%2C%20LATITUDE%2C%20LONGITUDE" +
+        "%2C%20LATITUDE%2C%20LONGITUDE%2C%20NAME" +
         "&filter=INSTANCE%3D" +
         event.request.parameters.namespace +
         "&" + apiKeyScript;
