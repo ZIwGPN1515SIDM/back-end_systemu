@@ -59,6 +59,7 @@ if (event.request.method == "GET" && event.resource == "place") {
                 if (response.statusCode == 200) {
                     url = host +
                         "sidm/_table/NAMESPACES" +
+                        "?related=CATEGORY" +
                         "?filter=OWNER_ID%3D" +
                         JSON.parse(body).resource[0].ID +
                         "&" + apiKeyScript;
