@@ -53,7 +53,37 @@ if (event.request.method == "GET" && event.request.parameters.type == "namespace
             event.setResponse(JSON.parse(body), JSON.parse(body).error.code, 'applicaton/json');
         }
     });
-} else if (event.request.method == "GET" && event.request.parameters.type == "place") {
+} else if (event.request.method == "GET" && event.request.parameters.type == "namespace" && event.resource == "event") {
+    var url = host +
+        "sidm/_table/NAMESPACES" +
+        "?fields=ID%2C%20NAME%2C%20EVENT_CONTENT%2C%20EVENT_END" +
+        "&filter=INSTANCE%3D" +
+        event.request.parameters.namespace +
+        "&" + apiKeyScript;
+    platform.api.get(url, '', function (body, response) {
+        if (response.statusCode == 200) {
+            var res = {
+                "namespace": JSON.parse(body).resource[0]
+            }
+            url = host +
+                "sidm/_table/PLACES" +
+                "?fields=ID%2C%20NAME%2C%20EVENT_CONTENT%2C%20EVENT_END" +
+                "&filter=NAMESPACE_ID%3D" +
+                JSON.parse(body).resource[0].ID +
+                "&" + apiKeyScript;
+            platform.api.get(url, '', function (body, response) {
+                if (response.statusCode == 200) {
+                    res.places = JSON.parse(body).resource;
+                    event.setResponse(res, response.statusCode, 'applicaton/json');
+                } else {
+                    event.setResponse(JSON.parse(body), JSON.parse(body).error.code, 'applicaton/json');
+                }
+            });
+        } else {
+            event.setResponse(JSON.parse(body), JSON.parse(body).error.code, 'applicaton/json');
+        }
+    });
+} else if (event.request.method == "GET" && event.request.parameters.type == "place" && event.resource == "") {
     var url = host +
         "sidm/_table/NAMESPACES" +
         "?fields=ID%2C%20DESCRIPTION%2C%20ADVERT%2C%20EVENT_CONTENT%2C%20ADDED_ON" +
@@ -88,7 +118,7 @@ if (event.request.method == "GET" && event.request.parameters.type == "namespace
             event.setResponse(JSON.parse(body), JSON.parse(body).error.code, 'applicaton/json');
         }
     });
-} else if (event.request.method == "GET" && event.request.parameters.type == "namespace") {
+} else if (event.request.method == "GET" && event.request.parameters.type == "namespace" && event.resource == "") {
 
     var url = host +
         "sidm/_table/NAMESPACES" +
