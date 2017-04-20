@@ -26,6 +26,7 @@ platform.api.post(url, event.request.payload, '', function (body, response) {
                 && JSON.parse(body).resource.length == 1
                 && JSON.parse(body).resource[0].SERIAL_CODE_ID != null) {
 
+                var userId = JSON.parse(body).resource[0].ID;
                 url = host
                     + "SIDM/_table/SERIAL_CODES"
                     + "?filter=ID%3D"
@@ -39,13 +40,16 @@ platform.api.post(url, event.request.payload, '', function (body, response) {
                         && JSON.parse(body).resource[0].ACTIVE == true) {
 
                         event.response.content.LICENSE = true;
+                        event.response.content.USERSID = userId;
                         event.setResponse(event.response.content, 200, 'application/json');
                     } else if (response.statusCode == 200 && JSON.parse(body).resource.length == 1
                         && JSON.parse(body).resource[0].ACTIVE == false) {
                         event.response.content.LICENSE = false;
+                        event.response.content.USERSID = userId;
                         event.setResponse(event.response.content, 200, 'application/json');
                     } else if (response.statusCode == 200 && JSON.parse(body).resource.length == 0) {
                         event.response.content.LICENSE = false;
+                        event.response.content.USERSID = userId;
                         event.setResponse(event.response.content, 200, 'application/json');
                     } else {
                         event.setResponse({"errorType": "somethingWentWrogn"}, 500, 'application/json');
@@ -55,6 +59,7 @@ platform.api.post(url, event.request.payload, '', function (body, response) {
                 && JSON.parse(body).resource.length == 1
                 && JSON.parse(body).resource[0].SERIAL_CODE_ID == null) {
                 event.response.content.LICENSE = false;
+                event.response.content.USERSID = JSON.parse(body).resource[0].ID;
                 event.setResponse(event.response.content, 200, 'application/json');
             } else {
                 event.setResponse({"errorType": "userNotInTable"}, 404, 'application/json');
