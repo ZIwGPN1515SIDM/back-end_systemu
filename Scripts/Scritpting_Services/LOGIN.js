@@ -31,7 +31,6 @@ platform.api.post(url, event.request.payload, '', function (body, response) {
                     + "SIDM/_table/SERIAL_CODES"
                     + "?filter=ID%3D"
                     + JSON.parse(body).resource[0].SERIAL_CODE_ID
-                    + ")"
                     + apiKeyScript;
 
                 platform.api.get(url, '', function (body, response) {
