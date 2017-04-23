@@ -56,7 +56,7 @@ if (event.request.method == "GET" && event.request.parameters.type == "namespace
 } else if (event.request.method == "GET" && event.request.parameters.type == "namespace" && event.resource == "event") {
     var url = host +
         "sidm/_table/NAMESPACES" +
-        "?fields=ID%2C%20NAME%2C%20EVENT_CONTENT%2C%20EVENT_END" +
+        "?fields=ID%2C%20NAME%2C%20EVENT_CONTENT%2C%20EVENT_END%2C%20EVENT_NAME" +
         "&filter=INSTANCE%3D" +
         event.request.parameters.namespace +
         "&" + apiKeyScript;
@@ -67,7 +67,7 @@ if (event.request.method == "GET" && event.request.parameters.type == "namespace
             }
             url = host +
                 "sidm/_table/PLACES" +
-                "?fields=ID%2C%20NAME%2C%20EVENT_CONTENT%2C%20EVENT_END" +
+                "?fields=ID%2C%20NAME%2C%20EVENT_CONTENT%2C%20EVENT_END%2C%20EVENT_NAME" +
                 "&filter=NAMESPACE_ID%3D" +
                 JSON.parse(body).resource[0].ID +
                 "&" + apiKeyScript;
