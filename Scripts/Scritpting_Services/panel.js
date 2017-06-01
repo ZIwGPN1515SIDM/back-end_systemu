@@ -17,6 +17,7 @@ if (event.request.method == "GET" && event.resource == "place") {
                         "sidm/_table/PLACES" +
                         "?filter=OWNER_ID%3D" +
                         JSON.parse(body).resource[0].ID +
+                        "&related=NAMESPACES_by_NAMESPACE_ID" +
                         "&" + apiKeyScript;
                     platform.api.get(url, '', function (body, response) {
                         if (response.statusCode == 200) {
@@ -62,6 +63,7 @@ if (event.request.method == "GET" && event.resource == "place") {
                         "?related=CATEGORY" +
                         "?filter=OWNER_ID%3D" +
                         JSON.parse(body).resource[0].ID +
+                        "&related=CATEGORY" +
                         "&" + apiKeyScript;
                     platform.api.get(url, '', function (body, response) {
                         if (response.statusCode == 200) {
