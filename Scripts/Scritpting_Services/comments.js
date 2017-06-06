@@ -18,6 +18,7 @@ if (event.request.method == "POST" && event.resource == "add") {
     url = host + "sidm/_table/COMMENTS" +
         "?filter=(TYPE%3DNAMESPACE)AND(NAMESPACES_ID%3D" +
         event.request.parameters.id + ")" +
+        "&related=USER" +
         "&" + apiKeyScript;
     platform.api.get(url, '', function (body, response) {
         if (response.statusCode == 200 && JSON.parse(body).resource.length > 0) {
@@ -35,6 +36,7 @@ if (event.request.method == "POST" && event.resource == "add") {
     url = host + "sidm/_table/COMMENTS" +
         "?filter=(TYPE%3DPLACE)AND(PLACES_ID%3D" +
         event.request.parameters.id + ")" +
+        "&related=USER" +
         "&" + apiKeyScript;
     platform.api.get(url, '', function (body, response) {
         if (response.statusCode == 200 && JSON.parse(body).resource.length > 0) {
